@@ -1,12 +1,27 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel="stylesheet" href="/css/index.css">
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <script src="/js/index.js"></script>
-  </body>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <link rel="stylesheet" href="/css/index.css">
+</head>
+
+<body>
+  <a class="add-note" title="添加笔记" href="#"><span class="fa fa-plus"></span> 添加</a>
+  <h1>
+    <%= title %>
+  </h1>
+  <p>Welcome to
+    <%= title %>
+  </p>
+  <script src="/js/index.js"></script>
+  <script src="/js/MarkdownIME.min.js"></script>
+  <script>
+    var note_ct = document.querySelectorAll(".note-ct");
+    MarkdownIME.Enhance(note_ct);
+  </script>
+</body>
+
 </html>

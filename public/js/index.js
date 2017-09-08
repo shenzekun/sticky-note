@@ -60,19 +60,11 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Toast=__webpack_require__(1).Toast;
-Toast("sdsd",3000);
-
-
-/***/ }),
-/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {__webpack_require__(5);
@@ -109,10 +101,10 @@ function Toast(msg, time) {
 
 
 module.exports.Toast = Toast;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 2 */
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! jQuery v2.0.3 | (c) 2005, 2013 jQuery Foundation, Inc. | jquery.org/license
@@ -124,6 +116,17 @@ module.exports.Toast = Toast;
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)),"object"==typeof e&&"object"==typeof e.document&&(e.jQuery=e.$=x)})(window);
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Toast=__webpack_require__(0).Toast;
+var note=__webpack_require__(6).Note;
+Toast("sdsd",3000);
+
+new note();
+
 
 /***/ }),
 /* 3 */
@@ -164,6 +167,55 @@ module.exports = __webpack_amd_options__;
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(7)
+var Toast = __webpack_require__(0).Toast;
+
+
+function Note(opts) {
+    this.initOpts(opts);
+    this.createNode();
+}
+
+Note.prototype = {
+    defaultOpts: {
+        id: '', //Note的 id
+        $ct: $('#content').length > 0 ? $('#content') : $('body'), //默认存放 Note 的容器
+        context: 'input here' //Note 的内容
+    },
+    initOpts: function (opts) {
+        this.opts = $.extend({}, this.defaultOpts, opts || {});
+        if (this.opts.id) {
+            this.id = this.opts.id;
+        }
+    },
+    createNode: function () {
+        var tpl = '<div class="note">' +
+            '<div class="note-head"><span class="delete">&times;</span></div>' +
+            '<div class="note-ct" contenteditable="true"></div>' +
+            '</div>';
+        this.$note = $(tpl);
+        this.$note.find('.note-ct').html(this.opts.context);
+        this.opts.$ct.append(this.$note);
+        if (!this.id) this.$note.css('bottom', '10px'); //新增放到右边
+    }
+}
+
+
+
+
+module.exports.Note = Note;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

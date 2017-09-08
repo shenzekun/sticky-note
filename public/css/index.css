@@ -9,4 +9,66 @@
   border-radius: 3px;
   text-align: center;
   display: none;
-  box-shadow: 0px 0px 3px 1px rgba(255, 255, 255, 0.6); }
+  box-shadow: 0px 0px 3px 1px rgba(255, 255, 255, 0.6);
+}
+
+.note {
+  position: absolute;
+  color: #333;
+  width: 250px;
+  margin: 20px 10px;
+  transition: all 0.5s;
+}
+
+.note .note-head {
+  height: 20px;
+  background-color: #ea9b35;
+  cursor: move;
+}
+
+.note .note-head:hover .delete {
+  opacity: 1;
+}
+
+.note .note-head:before {
+  position: absolute;
+  left: 50%;
+  top: -11px;
+  margin-left: -32px;
+  content: ' ';
+  display: block;
+  width: 64px;
+  height: 18px;
+  background: #35bba3;
+}
+
+.note .note-head:after {
+  position: absolute;
+  left: 50%;
+  margin-left: 32px;
+  top: -11px;
+  z-index: -1;
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 5px solid #299683;
+  border-top: 18px solid transparent;
+}
+
+.note .note-ct {
+  padding: 10px;
+  background-color: #efb04e;
+  outline: none;
+}
+
+.note .delete {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-size: 12px;
+  color: #fff;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity .3s;
+}
