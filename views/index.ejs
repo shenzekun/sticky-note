@@ -9,18 +9,19 @@
 </head>
 
 <body>
-  <a class="add-note" title="添加笔记" href="#"><span class="fa fa-plus"></span> 添加</a>
-  <h1>
-    <%= title %>
-  </h1>
-  <p>Welcome to
-    <%= title %>
-  </p>
+  <nav class="navbar">
+    <a href="javascript:void(0);" class="btn add-note">添加笔记</a>
+
+  </nav>
+  <div id="content"></div>
   <script src="/js/index.js"></script>
   <script src="/js/MarkdownIME.min.js"></script>
   <script>
-    var note_ct = document.querySelectorAll(".note-ct");
-    MarkdownIME.Enhance(note_ct);
+    document.querySelector(".add-note").addEventListener("click", function () {
+      var note_ct = document.querySelectorAll(".note-ct");
+      console.log(note_ct)
+      MarkdownIME.Enhance(note_ct);
+    })
   </script>
 </body>
 

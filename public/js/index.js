@@ -130,11 +130,212 @@ module.exports.Toast = Toast;
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports) {
+
+/* 发布订阅模式 */
+var Event = (function () {
+    var events = {};
+
+    function on(evt, handler) {
+        events[evt] = events[evt] || [];
+        events[evt].push({
+            handler: handler
+        });
+    }
+
+    function fire(evt, args) {
+        if (!events[evt]) {
+            return;
+        }
+        for (var i = 0; i < events[evt].length; i++) {
+            events[evt][i].handler(args);
+        }
+    }
+
+    function off(name) {
+        delete events[name];
+    }
+    return {
+        on: on,
+        fire: fire,
+        off: off
+    }
+})();
+
+module.exports = Event;
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(7)
-__webpack_require__(8)
+/* WEBPACK VAR INJECTION */(function($) {var Toast=__webpack_require__(1).Toast;
+var WaterFall=__webpack_require__(7);
+var NoteManager=__webpack_require__(8);
+var Event=__webpack_require__(2);
+
+
+NoteManager.load();
+$('.add-note').on('click',function(){
+    NoteManager.add();
+})
+
+Event.on('waterfall',function(){
+    WaterFall.init($("#content"));
+})
+
+
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if(!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if(!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
+module.exports = __webpack_amd_options__;
+
+/* WEBPACK VAR INJECTION */}.call(exports, {}))
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {/* 瀑布流 */
+
+var WaterFall = (function () {
+    var $ct, $items;
+
+    function render($c) {
+        $ct = $c;
+        $items = $ct.children();
+        var nodeWidth = $items.outerWidth(true),
+            colNum = parseInt($(window).width() / nodeWidth),//获取列数
+            colSumHeight = [];//获取每列的高度
+
+
+        //对每列的高度进行初始化
+        for (var i = 0; i < colNum; i++) {
+            colSumHeight[i] = 0;
+        }
+
+        $items.each(function () {
+            var $current = $(this);
+            var index = 0,
+                minSumHeight = colSumHeight[0];
+
+            //获取最小的的列数的高度和索引
+            for (var i = 0; i < colSumHeight.length; i++) {
+                if (minSumHeight > colSumHeight[i]) {
+                    index = i;
+                    minSumHeight = colSumHeight[i];
+                }
+            }
+            
+            //对当前元素进行定位
+            $current.css({
+                left: nodeWidth * index,
+                top: minSumHeight
+            });
+            colSumHeight[index] += $current.outerWidth(true);
+        });
+    }
+
+    //当窗口发生变化时，重新渲染
+    $(window).on('resize', function () {
+        render($ct);
+    });
+    return {
+        init: render
+    }
+})();
+
+module.exports=WaterFall;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {var Toast = __webpack_require__(1).Toast;
+var Note = __webpack_require__(9).Note;
+var Event = __webpack_require__(2);
+
+var NoteManager = (function () {
+    //页面加载
+    function load() {
+        $.get('api/notes').done(function (res) {
+            if (res.status === 1) {
+                $.each(res.data, function (index, msg) {
+                    new Note({
+                        id: msg.id,
+                        context: msg.text
+                    });
+                });
+                Event.fire('waterfall');
+            } else {
+                Toast(0, res.errorMsg);
+            }
+        }).fail(function () {
+            Toast(0, "网络异常");
+        });
+    }
+
+    /* 添加笔记 */
+    function add() {
+        new Note();
+    }
+
+    return {
+        load: load,
+        add: add
+    }
+})();
+
+module.exports = NoteManager;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(10)
+__webpack_require__(11)
 var Toast = __webpack_require__(1).Toast;
+var Event=__webpack_require__(2);
 
 
 function Note(opts) {
@@ -207,7 +408,7 @@ Note.prototype = {
             if ($noteCt.data('before') != $noteCt.html()) {
                 $noteCt.data('before', $noteCt.html());
                 _this.setLayout();
-                if (_this.id) {
+                if (_this.id) {//判断是否有这个 id，如果有就更新，如果没有就添加
                     _this.edit($noteCt.html())
                 } else {
                     _this.add($noteCt.html())
@@ -253,7 +454,7 @@ Note.prototype = {
             } else {
                 _this.$note.remove();
                 Event.fire('waterfall');
-                Toast(0, ret.errorMsg);
+                Toast(0, res.errorMsg);
             }
         })
     },
@@ -265,7 +466,7 @@ Note.prototype = {
             note: msg
         }).done(function (res) {
             if (res.status === 1) {
-                Toast(1, 'update success');
+                Toast(1, '更新成功！');
             } else {
                 Toast(0, res.errorMsg);
             }
@@ -279,7 +480,7 @@ Note.prototype = {
         }).done(function (res) {
             if (res.status === 1) {
                 Toast(1, '删除成功！');
-                self.$note.remove();
+                _this.$note.remove();
                 Event.fire('waterfall')
             } else {
                 Toast(0, '删除失败');
@@ -295,151 +496,16 @@ module.exports.Note = Note;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function($) {var Toast=__webpack_require__(1).Toast;
-var note=__webpack_require__(2).Note;
-var NoteManager=__webpack_require__(9);
-
-$('.add-note').on('click',function(){
-    NoteManager.add();
-})
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-module.exports = function(module) {
-	if(!module.webpackPolyfill) {
-		module.deprecate = function() {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if(!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
-module.exports = __webpack_amd_options__;
-
-/* WEBPACK VAR INJECTION */}.call(exports, {}))
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function($) {var Toast = __webpack_require__(1).Toast;
-var Note = __webpack_require__(2).Note;
-var Event = __webpack_require__(10);
-
-var NoteManager = (function () {
-    //页面加载
-    function load() {
-        $.get('api/notes').done(function (res) {
-            if (res.status === 1) {
-                $.each(res.data, function (index, msg) {
-                    new Note({
-                        id: msg.id,
-                        context: msg.text
-                    });
-                });
-                Event.fire('waterfall');
-            } else {
-                Toast(0, res.errorMsg);
-            }
-        }).fail(function () {
-            Toast(0, "网络异常");
-        });
-    }
-
-    /* 添加笔记 */
-    function add() {
-        new Note();
-    }
-
-    return {
-        load: load,
-        add: add
-    }
-})();
-
-module.exports = NoteManager;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
 /* 10 */
 /***/ (function(module, exports) {
 
-/* 发布订阅模式 */
-var Event = (function () {
-    var events = {};
+// removed by extract-text-webpack-plugin
 
-    function on(evt, handler) {
-        events[evt] = events[evt] || [];
-        events[evt].push({
-            handler: handler
-        });
-    }
+/***/ }),
+/* 11 */
+/***/ (function(module, exports) {
 
-    function fire(evt, args) {
-        if (!events[evt]) {
-            return;
-        }
-        for (var i = 0; i < events[evt].length; i++) {
-            events[evt][i].handler(args);
-        }
-    }
-
-    function off(name) {
-        delete events[name];
-    }
-    return {
-        on: on,
-        fire: fire,
-        off: off
-    }
-})();
-
-module.exports = Event;
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

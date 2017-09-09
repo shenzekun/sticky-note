@@ -1,6 +1,7 @@
 require('sass/note.scss')
 require('sass/markdown.scss')
 var Toast = require('./toast.js').Toast;
+var Event=require('./event.js');
 
 
 function Note(opts) {
@@ -73,7 +74,7 @@ Note.prototype = {
             if ($noteCt.data('before') != $noteCt.html()) {
                 $noteCt.data('before', $noteCt.html());
                 _this.setLayout();
-                if (_this.id) {
+                if (_this.id) {//判断是否有这个 id，如果有就更新，如果没有就添加
                     _this.edit($noteCt.html())
                 } else {
                     _this.add($noteCt.html())
@@ -119,7 +120,7 @@ Note.prototype = {
             } else {
                 _this.$note.remove();
                 Event.fire('waterfall');
-                Toast(0, ret.errorMsg);
+                Toast(0, res.errorMsg);
             }
         })
     },
@@ -131,7 +132,7 @@ Note.prototype = {
             note: msg
         }).done(function (res) {
             if (res.status === 1) {
-                Toast(1, 'update success');
+                Toast(1, '更新成功！');
             } else {
                 Toast(0, res.errorMsg);
             }
@@ -145,7 +146,7 @@ Note.prototype = {
         }).done(function (res) {
             if (res.status === 1) {
                 Toast(1, '删除成功！');
-                self.$note.remove();
+                _this.$note.remove();
                 Event.fire('waterfall')
             } else {
                 Toast(0, '删除失败');
