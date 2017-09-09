@@ -210,7 +210,7 @@ Note.prototype = {
     defaultOpts: {
         id: '', //Note的 id
         $ct: $('#content').length > 0 ? $('#content') : $('body'), //默认存放 Note 的容器
-        context: 'input here' //Note 的内容
+        context: '请输入内容' //Note 的内容
     },
     initOpts: function (opts) {
         this.opts = $.extend({}, this.defaultOpts, opts || {});
@@ -255,7 +255,7 @@ Note.prototype = {
         });
 
         $noteCt.on('focus', function () {
-            if ($noteCt.html() == 'input here') $noteCt.html('');
+            if ($noteCt.html() === '请输入内容') $noteCt.html('');
             $noteCt.data('before', $noteCt.html());
         }).on('blur paste', function () {
             if ($noteCt.data('before') != $noteCt.html()) {
@@ -269,7 +269,7 @@ Note.prototype = {
             }
         });
 
-
+        //-----------------bug---------------------------------------
         //设置笔记的移动
         $noteHead.on('mousedown', function (e) {
             var evtX = e.pageX - $note.offset().left, //evtX 计算事件的触发点在 dialog内部到 dialog 的左边缘的距离
@@ -291,6 +291,8 @@ Note.prototype = {
         });
     },
 
+
+    //--------------------------------------------------------
     /* 添加笔记 */
     add: function (msg) {
         var _this = this;
@@ -333,7 +335,7 @@ Note.prototype = {
             } else {
                 Toast(0, '删除失败');
             }
-        })
+        });
     }
 }
 
