@@ -105,10 +105,13 @@ Note.prototype = {
 
 
     //--------------------------------------------------------
-    /* 添加笔记 */
+
+
+
+    /* 添加笔记到数据库 */
     add: function (msg) {
         var _this = this;
-        $.post('api/notes/add', {
+        $.post('/api/notes/add', {
             note: msg
         }).done(function (res) {
             if (res.status === 1) {
@@ -120,10 +123,10 @@ Note.prototype = {
             }
         })
     },
-    /* 编辑笔记 */
+    /* 编辑笔记数据库 */
     edit: function (msg) {
         var _this = this;
-        $.post('api/notes/edit', {
+        $.post('/api/notes/edit', {
             id: this.id,
             note: msg
         }).done(function (res) {
@@ -137,7 +140,7 @@ Note.prototype = {
     /* 删除笔记 */
     delete: function () {
         var _this = this;
-        $.post('api/notes/delete', {
+        $.post('/api/notes/delete', {
             id: this.id
         }).done(function (res) {
             if (res.status === 1) {
