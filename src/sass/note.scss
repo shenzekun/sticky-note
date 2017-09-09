@@ -1,3 +1,6 @@
+
+/*--------note----------*/
+
 .note {
     position: absolute;
     color: #333;
@@ -43,7 +46,6 @@
     }
     .delete {
         position: absolute;
-        top: 4px;
         right: 4px;
         font-size: 12px;
         color: #fff;
@@ -51,4 +53,8 @@
         opacity: 0;
         transition: opacity .3s;
     }
+}
+
+.draggable{
+    opacity: .7;
 }

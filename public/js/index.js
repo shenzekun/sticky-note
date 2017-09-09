@@ -68,9 +68,14 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {__webpack_require__(5);
-/* 提示模块 */
 
-function toast(msg, time) {
+
+/* 
+提示模块
+参数：状态(1表示成功，0表示失败)，消息，出现时间(不写默认是1s)
+ */
+function toast(status, msg, time) {
+    this.status = status;
     this.msg = msg;
     this.time = time || 1000;
     this.createToast();
@@ -79,9 +84,15 @@ function toast(msg, time) {
 
 toast.prototype = {
     createToast: function () {
-        var html = '<div class="toast">' + this.msg + '</div>';
-        this.$toast = $(html);
-        $('body').append(this.$toast);
+        if (this.status === 1) {
+            var html = '<div class="toast"><img src="../../imgs/1.png" class="toast_icon"></img><span class="toast_word">' + this.msg + '</span></div>';
+            this.$toast = $(html);
+            $('body').append(this.$toast);
+        } else {
+            var html = '<div class="toast"><img src="../../imgs/0.png" class="toast_icon"></img><span class="toast_word">' + this.msg + '</span></div>';
+            this.$toast = $(html);
+            $('body').append(this.$toast);
+        }
     },
     showToast: function () {
         var _this = this;
@@ -95,8 +106,8 @@ toast.prototype = {
     }
 }
 
-function Toast(msg, time) {
-    return new toast(msg, time);
+function Toast(status, msg, time) {
+    return new toast(status, msg, time);
 }
 
 
@@ -123,7 +134,7 @@ module.exports.Toast = Toast;
 
 var Toast=__webpack_require__(0).Toast;
 var note=__webpack_require__(6).Note;
-Toast("sdsd",3000);
+Toast(0,"好好",3000);
 
 new note();
 
@@ -176,15 +187,26 @@ module.exports = __webpack_amd_options__;
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {__webpack_require__(7)
+__webpack_require__(8)
 var Toast = __webpack_require__(0).Toast;
 
 
 function Note(opts) {
     this.initOpts(opts);
     this.createNode();
+    this.setColor();
+    this.bind();
 }
 
 Note.prototype = {
+    colors: [
+        ['#ea9b35', '#efb04e'], // headColor, containerColor
+        ['#dd598b', '#e672a2'],
+        ['#eee34b', '#f2eb67'],
+        ['#c24226', '#d15a39'],
+        ['#c1c341', '#d0d25c'],
+        ['#3f78c3', '#5591d2']
+    ],
     defaultOpts: {
         id: '', //Note的 id
         $ct: $('#content').length > 0 ? $('#content') : $('body'), //默认存放 Note 的容器
@@ -205,6 +227,113 @@ Note.prototype = {
         this.$note.find('.note-ct').html(this.opts.context);
         this.opts.$ct.append(this.$note);
         if (!this.id) this.$note.css('bottom', '10px'); //新增放到右边
+    },
+
+    setColor: function () {
+        var color = this.colors[Math.floor(Math.random() * 6)];
+        this.$note.find(".note-head").css('background-color', color[0]);
+        this.$note.find('.note-ct').css('background-color', color[1]);
+    },
+    setLayout: function () {
+        var self = this;
+        if (self.clock) {
+            clearTimeout(self.clock);
+        }
+        self.clock = setTimeout(function () {
+            Event.fire('waterfall');
+        }, 100);
+    },
+    bind: function () {
+        var _this = this;
+        $note = this.$note,
+            $noteHead = $note.find('.note-head'),
+            $noteCt = $note.find('.note-ct'),
+            $close = $note.find('.delete');
+
+        $close.on('click', function () {
+            _this.delete();
+        });
+
+        $noteCt.on('focus', function () {
+            if ($noteCt.html() == 'input here') $noteCt.html('');
+            $noteCt.data('before', $noteCt.html());
+        }).on('blur paste', function () {
+            if ($noteCt.data('before') != $noteCt.html()) {
+                $noteCt.data('before', $noteCt.html());
+                _this.setLayout();
+                if (_this.id) {
+                    _this.edit($noteCt.html())
+                } else {
+                    _this.add($noteCt.html())
+                }
+            }
+        });
+
+
+        //设置笔记的移动
+        $noteHead.on('mousedown', function (e) {
+            var evtX = e.pageX - $note.offset().left, //evtX 计算事件的触发点在 dialog内部到 dialog 的左边缘的距离
+                evtY = e.pageY - $note.offset().top;
+            console.log($note.offset().top)
+            console.log(evtX, evtY, e.pageY, e.pageX)
+            $note.addClass('draggable').data('evtPos', {
+                x: evtX,
+                y: evtY
+            }); //把事件到 dialog 边缘的距离保存下来
+        }).on('mouseup', function () {
+            $note.removeClass('draggable').removeData('evtPos');
+        });
+        $('body').on('mousemove', function (e) {
+            $('.draggable').length && $('.draggable').offset({
+                top: e.pageY - $('.draggable').data('evtPos').y,
+                left: e.pageX - $('.draggable').data('evtPos').x
+            })
+        });
+    },
+
+    /* 添加笔记 */
+    add: function (msg) {
+        var _this = this;
+        $.post('api/notes/add', {
+            note: msg
+        }).done(function (res) {
+            if (res.status === 1) {
+                Toast(1, '添加成功！');
+            } else {
+                _this.$note.remove();
+                Event.fire('waterfall');
+                Toast(0, ret.errorMsg);
+            }
+        })
+    },
+    /* 编辑笔记 */
+    edit: function (msg) {
+        var _this = this;
+        $.post('api/notes/edit', {
+            id: this.id,
+            note: msg
+        }).done(function (res) {
+            if (res.status === 1) {
+                Toast(1, 'update success');
+            } else {
+                Toast(0, res.errorMsg);
+            }
+        });
+    },
+    /* 删除笔记 */
+    delete: function () {
+        var _this = this;
+        $.post('api/notes/delete', {
+            id: this.id
+        }).done(function (res) {
+            if (res.status === 1) {
+                Toast(1, '删除成功！');
+                self.$note.remove();
+                Event.fire('waterfall')
+            } else {
+                Toast(0, '删除失败');
+            }
+        })
     }
 }
 
@@ -216,6 +345,12 @@ module.exports.Note = Note;
 
 /***/ }),
 /* 7 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

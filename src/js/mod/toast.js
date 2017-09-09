@@ -1,7 +1,12 @@
 require('sass/toast.scss');
-/* 提示模块 */
 
-function toast(msg, time) {
+
+/* 
+提示模块
+参数：状态(1表示成功，0表示失败)，消息，出现时间(不写默认是1s)
+ */
+function toast(status, msg, time) {
+    this.status = status;
     this.msg = msg;
     this.time = time || 1000;
     this.createToast();
@@ -10,9 +15,15 @@ function toast(msg, time) {
 
 toast.prototype = {
     createToast: function () {
-        var html = '<div class="toast">' + this.msg + '</div>';
-        this.$toast = $(html);
-        $('body').append(this.$toast);
+        if (this.status === 1) {
+            var html = '<div class="toast"><img src="../../imgs/1.png" class="toast_icon"></img><span class="toast_word">' + this.msg + '</span></div>';
+            this.$toast = $(html);
+            $('body').append(this.$toast);
+        } else {
+            var html = '<div class="toast"><img src="../../imgs/0.png" class="toast_icon"></img><span class="toast_word">' + this.msg + '</span></div>';
+            this.$toast = $(html);
+            $('body').append(this.$toast);
+        }
     },
     showToast: function () {
         var _this = this;
@@ -26,8 +37,8 @@ toast.prototype = {
     }
 }
 
-function Toast(msg, time) {
-    return new toast(msg, time);
+function Toast(status, msg, time) {
+    return new toast(status, msg, time);
 }
 
 
