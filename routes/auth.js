@@ -41,7 +41,6 @@ router.get('/github/callback',
         failureRedirect: '/login'
     }),
     function (req, res) {
-        console.log(req);
         req.session.user = {
             id: req.user.id,
             username: req.user.displayName || req.user.username,

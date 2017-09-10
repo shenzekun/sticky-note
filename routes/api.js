@@ -8,9 +8,16 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/notes', function (req, res, next) {
-
-  Note.findAll({
+  var opts = {
     raw: true
+  }
+  if (req.session && req.session.user) {
+    opts.where = {
+      userid: req.session.user.id
+    }
+  }
+  Note.findAll({
+    opts
   }).then(function (notes) {
     res.send({
       status: 1,
@@ -26,11 +33,14 @@ router.get('/notes', function (req, res, next) {
 
 /* 添加 */
 router.post('/notes/add', function (req, res, next) {
-  if(!req.session || !req.session.user){
-    return res.send({status: 0, errorMsg: '请先登录'})
+  if (!req.session || !req.session.user) {
+    return res.send({
+      status: 0,
+      errorMsg: '请先登录'
+    })
   }
   var note = req.body.note;
-  var userid=req.session.user.id;
+  var userid = req.session.user.id;
   if (!note) {
     return res.send({
       status: 0,
@@ -39,8 +49,8 @@ router.post('/notes/add', function (req, res, next) {
   }
 
   Note.create({
-    text: note,
-    userid:userid
+    userid:userid,
+    text: note
   }).then(function (data) {
     res.send({
       status: 1
@@ -57,12 +67,15 @@ router.post('/notes/add', function (req, res, next) {
 /* 编辑 */
 
 router.post('/notes/edit', function (req, res, next) {
-  if(!req.session || !req.session.user){
-    return res.send({status: 0, errorMsg: '请先登录'})
+  if (!req.session || !req.session.user) {
+    return res.send({
+      status: 0,
+      errorMsg: '请先登录'
+    })
   }
   var editid = req.body.id;
   var note = req.body.note;
-  var userid=req.session.user.id;
+  var userid = req.session.user.id;
   if (!note) {
     return res.send({
       status: 0,
@@ -74,7 +87,7 @@ router.post('/notes/edit', function (req, res, next) {
   }, {
     where: {
       id: editid,
-      userid:userid
+      userid: userid
     }
   }).then(function (data) {
     console.log(data);
@@ -91,15 +104,18 @@ router.post('/notes/edit', function (req, res, next) {
 
 /* 删除 */
 router.post('/notes/delete', function (req, res, next) {
-  if(!req.session || !req.session.user){
-    return res.send({status: 0, errorMsg: '请先登录'})
+  if (!req.session || !req.session.user) {
+    return res.send({
+      status: 0,
+      errorMsg: '请先登录'
+    })
   }
   var deleteid = req.body.id;
-  var userid=req.session.user.id;
+  var userid = req.session.user.id;
   Note.destroy({
     where: {
       id: deleteid,
-      userid:userid
+      userid: userid
     }
   }).then(function (data) {
     if (data !== 0) {

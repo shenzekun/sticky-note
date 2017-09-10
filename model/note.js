@@ -28,6 +28,9 @@ var Note = sequelize.define('note', {
     text: {
         type: Sequelize.STRING
     },
+    userid: {
+        type: Sequelize.INTEGER
+    },
     username: {
         type: Sequelize.STRING
     }
