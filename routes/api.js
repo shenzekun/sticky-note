@@ -8,11 +8,10 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/notes', function (req, res, next) {
-  var opts = {
-    raw: true
-  };
 
-  Note.findAll(opts).then(function (notes) {
+  Note.findAll({
+    raw: true
+  }).then(function (notes) {
     res.send({
       status: 1,
       data: notes
@@ -25,8 +24,15 @@ router.get('/notes', function (req, res, next) {
   });
 });
 
+/* 添加 */
 router.post('/notes/add', function (req, res, next) {
   var note = req.body.note;
+  if (!note) {
+    return res.send({
+      status: 0,
+      errorMsg: '内容不能为空！'
+    })
+  }
 
   Note.create({
     text: note
@@ -43,11 +49,17 @@ router.post('/notes/add', function (req, res, next) {
 });
 
 
-
+/* 编辑 */
 
 router.post('/notes/edit', function (req, res, next) {
   var editid = req.body.id;
   var note = req.body.note;
+  if (!note) {
+    return res.send({
+      status: 0,
+      errorMsg: '内容不能为空！'
+    })
+  }
   Note.update({
     text: note
   }, {
@@ -67,9 +79,10 @@ router.post('/notes/edit', function (req, res, next) {
   })
 })
 
-
+/* 删除 */
 router.post('/notes/delete', function (req, res, next) {
   var deleteid = req.body.id;
+  console.log(deleteid);
   Note.destroy({
     where: {
       id: deleteid

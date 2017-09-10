@@ -299,6 +299,7 @@ var NoteManager = (function () {
     function load() {
         $.get('api/notes').done(function (res) {
             if (res.status === 1) {
+                console.log(res.data);
                 $.each(res.data, function (index, msg) {
                     new Note({
                         id: msg.id,
@@ -335,7 +336,7 @@ module.exports = NoteManager;
 /* WEBPACK VAR INJECTION */(function($) {__webpack_require__(10)
 __webpack_require__(11)
 var Toast = __webpack_require__(1).Toast;
-var Event=__webpack_require__(2);
+var Event = __webpack_require__(2);
 
 
 function Note(opts) {
@@ -391,8 +392,8 @@ Note.prototype = {
         }, 100);
     },
     bind: function () {
-        var _this = this;
-        $note = this.$note,
+        var _this = this,//记录下坑，之前末尾是分号不是逗号后面都变成了全局变量结果造成了最后一个才能修改😂
+            $note = this.$note,
             $noteHead = $note.find('.note-head'),
             $noteCt = $note.find('.note-ct'),
             $close = $note.find('.delete');
@@ -408,7 +409,7 @@ Note.prototype = {
             if ($noteCt.data('before') != $noteCt.html()) {
                 $noteCt.data('before', $noteCt.html());
                 _this.setLayout();
-                if (_this.id) {//判断是否有这个 id，如果有就更新，如果没有就添加
+                if (_this.id) { //判断是否有这个id，如果有就更新，如果没有就添加
                     _this.edit($noteCt.html())
                 } else {
                     _this.add($noteCt.html())
@@ -475,17 +476,19 @@ Note.prototype = {
     /* 删除笔记 */
     delete: function () {
         var _this = this;
-        $.post('/api/notes/delete', {
-            id: this.id
-        }).done(function (res) {
-            if (res.status === 1) {
-                Toast(1, '删除成功！');
-                _this.$note.remove();
-                Event.fire('waterfall')
-            } else {
-                Toast(0, '删除失败');
-            }
-        });
+        if (confirm("确认要删除吗？")) {
+            $.post('/api/notes/delete', {
+                id: this.id
+            }).done(function (res) {
+                if (res.status === 1) {
+                    Toast(1, '删除成功！');
+                    _this.$note.remove();
+                    Event.fire('waterfall')
+                } else {
+                    Toast(0, '删除失败');
+                }
+            });
+        }
     }
 }
 
