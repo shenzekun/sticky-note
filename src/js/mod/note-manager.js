@@ -7,7 +7,7 @@ var NoteManager = (function () {
     function load() {
         $.get('api/notes').done(function (res) {
             if (res.status === 1) {
-                console.log(res.data);
+                // console.log(res.data);
                 $.each(res.data, function (index, msg) {
                     new Note({
                         id: msg.id,

@@ -299,7 +299,7 @@ var NoteManager = (function () {
     function load() {
         $.get('api/notes').done(function (res) {
             if (res.status === 1) {
-                console.log(res.data);
+                // console.log(res.data);
                 $.each(res.data, function (index, msg) {
                     new Note({
                         id: msg.id,
@@ -392,7 +392,7 @@ Note.prototype = {
         }, 100);
     },
     bind: function () {
-        var _this = this,//记录下坑，之前末尾是分号不是逗号后面都变成了全局变量结果造成了最后一个才能修改😂
+        var _this = this, //记录下坑，之前末尾是分号不是逗号后面都变成了全局变量结果造成了最后一个才能修改😂
             $note = this.$note,
             $noteHead = $note.find('.note-head'),
             $noteCt = $note.find('.note-ct'),
