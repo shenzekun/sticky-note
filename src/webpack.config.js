@@ -2,6 +2,7 @@ var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var autoprefixer = require('autoprefixer');
+
 module.exports = {
     entry: path.join(__dirname, "js/app/index"),
     output: {
@@ -31,7 +32,7 @@ module.exports = {
         new ExtractTextPlugin("css/index.css"),
         new webpack.LoaderOptionsPlugin({
             options: {
-                postcss: [
+                css: [
                     autoprefixer(),
                 ]
             }

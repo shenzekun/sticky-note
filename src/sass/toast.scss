@@ -3,8 +3,8 @@
 .toast {
     position: fixed;
     left: 50%;
-    transform: translateX(-50%);
-    bottom: 30px;
+    transform: translate(-50%,-50%);
+    top: 50%;
     padding: 5px 10px;
     color: #959698;
     border: 1px solid #ccc;

@@ -1,0 +1,48 @@
+html,body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#header {
+    width: 100%;
+    background-color: #5f74ac;
+    position: fixed;
+    height: 67px;
+    .add-note {
+        float: left;
+        font-size: 24px;
+        font-family: "Kaushan Script", "Helvetica Neue", Helvetica, Arial, cursive;
+        padding: 16px 1px;
+        color: #fed136;
+        margin-left: 30px;
+        text-decoration: none;
+        transition: all .5s;
+        &:hover{
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 2px;
+        }
+    }
+    .user-area {
+        float: right;
+        li {
+            float: left;
+            list-style: none;
+            line-height: 34px;
+            margin-right: 10px;
+            img {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                margin-top: -8px;
+            }
+            span {
+                color: #fff;
+                display: block;
+            }
+            .logout{
+                text-decoration: none;
+            }
+        }
+    }
+}

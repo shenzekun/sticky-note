@@ -7,8 +7,8 @@ var WaterFall = (function () {
         $ct = $c;
         $items = $ct.children();
         var nodeWidth = $items.outerWidth(true),
-            colNum = parseInt($(window).width() / nodeWidth),//获取列数
-            colSumHeight = [];//获取每列的高度
+            colNum = parseInt($(window).width() / nodeWidth), //获取列数
+            colSumHeight = []; //获取每列的高度
 
 
         //对每列的高度进行初始化
@@ -28,7 +28,7 @@ var WaterFall = (function () {
                     minSumHeight = colSumHeight[i];
                 }
             }
-            
+
             //对当前元素进行定位
             $current.css({
                 left: nodeWidth * index,
@@ -47,4 +47,4 @@ var WaterFall = (function () {
     }
 })();
 
-module.exports=WaterFall;
+module.exports = WaterFall;

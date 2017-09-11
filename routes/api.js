@@ -49,7 +49,7 @@ router.post('/notes/add', function (req, res, next) {
   }
 
   Note.create({
-    userid:userid,
+    userid: userid,
     text: note
   }).then(function (data) {
     res.send({

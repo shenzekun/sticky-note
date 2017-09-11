@@ -1,9 +1,48 @@
+html, body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box; }
+
+#header {
+  width: 100%;
+  background-color: #5f74ac;
+  position: fixed;
+  height: 67px; }
+  #header .add-note {
+    float: left;
+    font-size: 24px;
+    font-family: "Kaushan Script", "Helvetica Neue", Helvetica, Arial, cursive;
+    padding: 16px 1px;
+    color: #fed136;
+    margin-left: 30px;
+    text-decoration: none;
+    transition: all .5s; }
+    #header .add-note:hover {
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 2px; }
+  #header .user-area {
+    float: right; }
+    #header .user-area li {
+      float: left;
+      list-style: none;
+      line-height: 34px;
+      margin-right: 10px; }
+      #header .user-area li img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-top: -8px; }
+      #header .user-area li span {
+        color: #fff;
+        display: block; }
+      #header .user-area li .logout {
+        text-decoration: none; }
 /* --------toast---------- */
 .toast {
   position: fixed;
   left: 50%;
-  transform: translateX(-50%);
-  bottom: 30px;
+  transform: translate(-50%, -50%);
+  top: 50%;
   padding: 5px 10px;
   color: #959698;
   border: 1px solid #ccc;
@@ -25,6 +64,21 @@
   width: 250px;
   margin: 20px 10px;
   transition: all 0.5s; }
+  .note:nth-child(even) {
+    transform: rotate(4deg);
+    -webkit-transform: rotate(4deg);
+    -moz-transform: rotate(4deg);
+    -ms-transform: rotate(4deg); }
+  .note:nth-child(3n) {
+    transform: rotate(-3deg);
+    -webkit-transform: rotate(-3deg);
+    -moz-transform: rotate(-3deg);
+    -ms-transform: rotate(-3deg); }
+  .note:nth-child(5n) {
+    transform: rotate(5deg);
+    -webkit-transform: rotate(5deg);
+    -moz-transform: rotate(5deg);
+    -ms-transform: rotate(5deg); }
   .note .note-head {
     height: 20px;
     background-color: #ea9b35;
@@ -34,12 +88,12 @@
     .note .note-head:before {
       position: absolute;
       left: 50%;
-      top: -11px;
+      top: -10px;
       margin-left: -32px;
       content: ' ';
       display: block;
       width: 64px;
-      height: 18px;
+      height: 20px;
       background: #35bba3; }
     .note .note-head:after {
       position: absolute;
@@ -60,10 +114,11 @@
   .note .delete {
     position: absolute;
     right: 4px;
-    font-size: 12px;
+    top: -7px;
+    font-size: 22px;
     color: #fff;
     cursor: pointer;
-    opacity: 0;
+    opacity: 0.5;
     transition: opacity .3s; }
 
 .draggable {

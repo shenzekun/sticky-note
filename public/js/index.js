@@ -81,7 +81,7 @@
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(6);
+/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(7);
 
 
 /* 
@@ -168,23 +168,21 @@ module.exports = Event;
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function($) {var Toast=__webpack_require__(1).Toast;
-var WaterFall=__webpack_require__(7);
-var NoteManager=__webpack_require__(8);
-var Event=__webpack_require__(2);
+/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(6);
+var Toast = __webpack_require__(1).Toast;
+var WaterFall = __webpack_require__(8);
+var NoteManager = __webpack_require__(9);
+var Event = __webpack_require__(2);
 
 
 NoteManager.load();
-$('.add-note').on('click',function(){
+$('.add-note').on('click', function () {
     NoteManager.add();
 })
 
-Event.on('waterfall',function(){
+Event.on('waterfall', function () {
     WaterFall.init($("#content"));
 })
-
-
-
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
@@ -232,6 +230,12 @@ module.exports = __webpack_amd_options__;
 
 /***/ }),
 /* 7 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {/* 瀑布流 */
@@ -243,8 +247,8 @@ var WaterFall = (function () {
         $ct = $c;
         $items = $ct.children();
         var nodeWidth = $items.outerWidth(true),
-            colNum = parseInt($(window).width() / nodeWidth),//获取列数
-            colSumHeight = [];//获取每列的高度
+            colNum = parseInt($(window).width() / nodeWidth), //获取列数
+            colSumHeight = []; //获取每列的高度
 
 
         //对每列的高度进行初始化
@@ -264,7 +268,7 @@ var WaterFall = (function () {
                     minSumHeight = colSumHeight[i];
                 }
             }
-            
+
             //对当前元素进行定位
             $current.css({
                 left: nodeWidth * index,
@@ -283,15 +287,15 @@ var WaterFall = (function () {
     }
 })();
 
-module.exports=WaterFall;
+module.exports = WaterFall;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {var Toast = __webpack_require__(1).Toast;
-var Note = __webpack_require__(9).Note;
+var Note = __webpack_require__(10).Note;
 var Event = __webpack_require__(2);
 
 var NoteManager = (function () {
@@ -299,14 +303,17 @@ var NoteManager = (function () {
     function load() {
         $.get('api/notes').done(function (res) {
             if (res.status === 1) {
-                // console.log(res.data);
                 $.each(res.data, function (index, msg) {
+                    console.log(msg.createdAt);
                     new Note({
                         id: msg.id,
-                        context: msg.text
+                        context: msg.text,
+                        createTime: msg.createdAt.match(/^\d{4}-\d{1,2}-\d{1,2}/)
                     });
                 });
+
                 Event.fire('waterfall');
+
             } else {
                 Toast(0, res.errorMsg);
             }
@@ -330,11 +337,11 @@ module.exports = NoteManager;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(10)
-__webpack_require__(11)
+/* WEBPACK VAR INJECTION */(function($) {__webpack_require__(11)
+__webpack_require__(12)
 var Toast = __webpack_require__(1).Toast;
 var Event = __webpack_require__(2);
 
@@ -358,18 +365,21 @@ Note.prototype = {
     defaultOpts: {
         id: '', //Note的 id
         $ct: $('#content').length > 0 ? $('#content') : $('body'), //默认存放 Note 的容器
-        context: '请输入内容' //Note 的内容
+        context: '请输入内容', //Note 的内容
+        createTime: new Date().toISOString().match(/^\d{4}-\d{1,2}-\d{1,2}/)
     },
     initOpts: function (opts) {
         this.opts = $.extend({}, this.defaultOpts, opts || {});
         if (this.opts.id) {
             this.id = this.opts.id;
         }
+        this.createTime = this.opts.createTime ? this.opts.createTime : new Date().toISOString().match(/^\d{4}-\d{1,2}-\d{1,2}/)
     },
     createNode: function () {
         var tpl = '<div class="note">' +
             '<div class="note-head"><span class="delete">&times;</span></div>' +
             '<div class="note-ct" contenteditable="true"></div>' +
+            '<div class="note-info"><div class="note-time">'+this.createTime+'</div>'+
             '</div>';
         this.$note = $(tpl);
         this.$note.find('.note-ct').html(this.opts.context);
@@ -499,13 +509,13 @@ module.exports.Note = Note;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

@@ -7,14 +7,17 @@ var NoteManager = (function () {
     function load() {
         $.get('api/notes').done(function (res) {
             if (res.status === 1) {
-                // console.log(res.data);
                 $.each(res.data, function (index, msg) {
+                    console.log(msg.createdAt);
                     new Note({
                         id: msg.id,
-                        context: msg.text
+                        context: msg.text,
+                        createTime: msg.createdAt.match(/^\d{4}-\d{1,2}-\d{1,2}/)
                     });
                 });
+
                 Event.fire('waterfall');
+
             } else {
                 Toast(0, res.errorMsg);
             }

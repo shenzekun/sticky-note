@@ -4,25 +4,31 @@
 <head>
   <title>便利贴</title>
   <link rel="stylesheet" href="/css/index.css">
+  <link href="http://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet" type="text/css">
+  <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
   <link rel="shortcut icon" href="/imgs/favicon.ico">
 </head>
 
 <body>
-  <nav class="navbar">
-    <a href="javascript:void(0);" class="btn add-note">添加笔记</a>
-    <ul>
+  <div id="header">
+      <a class="add-note" title="添加笔记" href="#"><i class="fa fa-plus" aria-hidden="true"></i>Add Note</a>
+   
+    <ul class="user-area">
       <% if (isLogin){ %>
         <li><img src="<%= user.avatar %>" alt=""></li>
         <li><span title="<%= user.username %>"><%= user.username %></span></li>
         <li><span class="line"> | </span> </li>
         <li><a class="logout" href="/auth/logout">注销</a></li>
         <%} else { %>
-          <li><a class="btn" title="GitHub登录" href="/auth/github"> GitHub登录</a>
+          <li><a class="login" title="GitHub登录" href="/auth/github"> GitHub登录</a>
           </li>
           <% } %>
     </ul>
-  </nav>
+
+  </div>
+ 
   <div id="content"></div>
+  <div class="stars"></div>
   <script src="/js/index.js"></script>
   <script src="/js/MarkdownIME.min.js"></script>
   <script>

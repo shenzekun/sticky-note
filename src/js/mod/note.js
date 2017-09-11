@@ -23,18 +23,21 @@ Note.prototype = {
     defaultOpts: {
         id: '', //Note的 id
         $ct: $('#content').length > 0 ? $('#content') : $('body'), //默认存放 Note 的容器
-        context: '请输入内容' //Note 的内容
+        context: '请输入内容', //Note 的内容
+        createTime: new Date().toISOString().match(/^\d{4}-\d{1,2}-\d{1,2}/)
     },
     initOpts: function (opts) {
         this.opts = $.extend({}, this.defaultOpts, opts || {});
         if (this.opts.id) {
             this.id = this.opts.id;
         }
+        this.createTime = this.opts.createTime ? this.opts.createTime : new Date().toISOString().match(/^\d{4}-\d{1,2}-\d{1,2}/)
     },
     createNode: function () {
         var tpl = '<div class="note">' +
             '<div class="note-head"><span class="delete">&times;</span></div>' +
             '<div class="note-ct" contenteditable="true"></div>' +
+            '<div class="note-info"><div class="note-time">'+this.createTime+'</div>'+
             '</div>';
         this.$note = $(tpl);
         this.$note.find('.note-ct').html(this.opts.context);
