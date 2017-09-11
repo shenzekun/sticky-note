@@ -9,24 +9,24 @@
         width: 250px;
         margin: 20px 10px;
         transition: all 0.5s;
-        // &:nth-child(even) {
-        //     transform: rotate(3deg);
-        //     -webkit-transform: rotate(3deg);
-        //     -moz-transform: rotate(3deg);
-        //     -ms-transform: rotate(3deg);
-        // }
-        // &:nth-child(3n) {
-        //     transform: rotate(-2deg);
-        //     -webkit-transform: rotate(-2deg);
-        //     -moz-transform: rotate(-2deg);
-        //     -ms-transform: rotate(-2deg);
-        // }
-        // &:nth-child(5n) {
-        //     transform: rotate(4deg);
-        //     -webkit-transform: rotate(4deg);
-        //     -moz-transform: rotate(4deg);
-        //     -ms-transform: rotate(4deg);
-        // }
+        &:nth-child(even) {
+            transform: rotate(3deg);
+            -webkit-transform: rotate(3deg);
+            -moz-transform: rotate(3deg);
+            -ms-transform: rotate(3deg);
+        }
+        &:nth-child(3n) {
+            transform: rotate(-2deg);
+            -webkit-transform: rotate(-2deg);
+            -moz-transform: rotate(-2deg);
+            -ms-transform: rotate(-2deg);
+        }
+        &:nth-child(5n) {
+            transform: rotate(4deg);
+            -webkit-transform: rotate(4deg);
+            -moz-transform: rotate(4deg);
+            -ms-transform: rotate(4deg);
+        }
         .note-head {
             height: 20px;
             background-color: #ea9b35;
