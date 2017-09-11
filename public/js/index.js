@@ -474,6 +474,7 @@ Note.prototype = {
             note: msg
         }).done(function (res) {
             if (res.status === 1) {
+                _this.id=res.id;
                 Toast(1, '添加成功！');
             } else {
                 _this.$note.remove();
@@ -508,7 +509,7 @@ Note.prototype = {
                     _this.$note.remove();
                     Event.fire('waterfall')
                 } else {
-                    Toast(0, '删除失败');
+                    Toast(0, res.errorMsg);
                 }
             });
         }

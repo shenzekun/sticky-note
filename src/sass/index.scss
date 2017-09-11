@@ -1,11 +1,16 @@
-html,body {
+/* --------index---------- */
+
+html,
+body {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
-body{
+
+body {
     background-color: #fffec7;
 }
+
 #header {
     width: 100%;
     background-color: #5f74ac;
@@ -22,7 +27,7 @@ body{
         margin-left: 30px;
         text-decoration: none;
         transition: all .5s;
-        &:hover{
+        &:hover {
             border-bottom: 1px solid #ccc;
             padding-bottom: 2px;
         }
@@ -41,7 +46,7 @@ body{
                 border-radius: 50%;
                 margin-top: -8px;
                 transition: all 1s;
-                &:hover{
+                &:hover {
                     transform: rotate(360deg);
                 }
             }
@@ -49,10 +54,9 @@ body{
                 color: #fff;
                 display: block;
             }
-            .logout{
+            .logout {
                 text-decoration: none;
             }
         }
     }
 }
-

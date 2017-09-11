@@ -3,7 +3,7 @@
 .toast {
     position: fixed;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     top: 50%;
     padding: 5px 10px;
     color: #959698;
@@ -12,13 +12,13 @@
     border-radius: 3px;
     text-align: center;
     display: none;
-    box-shadow: 5px 5px 10px 1px rgba(0, 0, 0,.6);
+    box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, .6);
     .toast_icon {
         width: 25px;
         vertical-align: middle;
         padding-right: 7px;
     }
-    .toast_word{
+    .toast_word {
         vertical-align: middle;
     }
 }

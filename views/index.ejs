@@ -5,7 +5,7 @@
   <title>便利贴</title>
   <link rel="stylesheet" href="/css/index.css">
   <link href="http://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet" type="text/css">
-  <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+  <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <link rel="shortcut icon" href="/imgs/favicon.ico">
 </head>
 
@@ -31,7 +31,7 @@
   <script src="/js/index.js"></script>
   <script src="/js/MarkdownIME.min.js"></script>
   <script>
-    document.querySelector("body").addEventListener("click", function () {
+    document.querySelector("#content").addEventListener("click", function () {
       console.log(document.querySelectorAll(".note-ct"))
       var note_ct = document.querySelectorAll(".note-ct");
       MarkdownIME.Enhance(note_ct);

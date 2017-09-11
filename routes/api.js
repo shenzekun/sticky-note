@@ -37,6 +37,12 @@ router.post('/notes/add', function (req, res, next) {
     return res.send({
       status: 0,
       errorMsg: '请先登录'
+    });
+  }
+  if (!req.body.note) {
+    return res.send({
+      status: 0,
+      errorMsg: '内容不能为空'
     })
   }
   var note = req.body.note;
@@ -56,7 +62,8 @@ router.post('/notes/add', function (req, res, next) {
     text: note
   }).then(function (data) {
     res.send({
-      status: 1
+      status: 1,
+      id: data.id
     })
   }).catch(function (e) {
     res.send({
@@ -91,9 +98,15 @@ router.post('/notes/edit', function (req, res, next) {
     where: {
       id: editid,
       userid: userid
-    }
+    },
+    returning: true
   }).then(function (data) {
-    console.log(data);
+    if (data[1] === 0) {
+      return res.send({
+        status: 0,
+        errorMsg: '没有权限修改'
+      })
+    }
     res.send({
       status: 1
     })
