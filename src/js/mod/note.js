@@ -42,7 +42,8 @@ Note.prototype = {
         this.$note = $(tpl);
         this.$note.find('.note-ct').html(this.opts.context);
         this.opts.$ct.append(this.$note);
-        if (!this.id) this.$note.css('bottom', '10px'); //新增放到右边
+        //if (!this.id) this.$note.css('bottom', '10px'); //新增放到右边
+        Event.fire('waterfall');
     },
 
     setColor: function () {

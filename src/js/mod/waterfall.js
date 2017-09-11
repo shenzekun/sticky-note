@@ -30,11 +30,11 @@ var WaterFall = (function () {
             }
 
             //对当前元素进行定位
-            $current.css({
+            $current.animate({
                 left: nodeWidth * index,
                 top: minSumHeight
-            });
-            colSumHeight[index] += $current.outerWidth(true);
+            },5);
+            colSumHeight[index] += $current.outerHeight(true);
         });
     }
 
