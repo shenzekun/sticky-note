@@ -41,6 +41,7 @@ router.post('/notes/add', function (req, res, next) {
   }
   var note = req.body.note;
   var userid = req.session.user.id;
+  var username = req.session.user.username;
   if (!note) {
     return res.send({
       status: 0,
@@ -48,8 +49,10 @@ router.post('/notes/add', function (req, res, next) {
     })
   }
 
+
   Note.create({
     userid: userid,
+    username: username,
     text: note
   }).then(function (data) {
     res.send({

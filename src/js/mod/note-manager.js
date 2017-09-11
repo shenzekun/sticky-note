@@ -8,11 +8,11 @@ var NoteManager = (function () {
         $.get('api/notes').done(function (res) {
             if (res.status === 1) {
                 $.each(res.data, function (index, msg) {
-                    console.log(msg.createdAt);
                     new Note({
                         id: msg.id,
                         context: msg.text,
-                        createTime: msg.createdAt.match(/^\d{4}-\d{1,2}-\d{1,2}/)
+                        createTime: msg.createdAt.match(/^\d{4}-\d{1,2}-\d{1,2}/),
+                        username: msg.username
                     });
                 });
 
@@ -28,7 +28,16 @@ var NoteManager = (function () {
 
     /* 添加笔记 */
     function add() {
-        new Note();
+        $.get('/login').then(function (res) {
+            if (res.status === 1) {
+                new Note({
+                    username: res.username
+                });
+            } else {
+                Toast(0, res.errorMsg);
+            }
+        });
+
     }
 
     return {

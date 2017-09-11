@@ -37,7 +37,10 @@ body {
         width: 50px;
         height: 50px;
         border-radius: 50%;
-        margin-top: -8px; }
+        margin-top: -8px;
+        transition: all 1s; }
+        #header .user-area li img:hover {
+          transform: rotate(360deg); }
       #header .user-area li span {
         color: #fff;
         display: block; }
@@ -70,24 +73,24 @@ body {
   #content .note {
     position: absolute;
     color: #333;
-    width: 250px;
+    width: 230px;
     margin: 20px 10px;
     transition: all 0.5s; }
     #content .note:nth-child(even) {
-      transform: rotate(3deg);
-      -webkit-transform: rotate(3deg);
-      -moz-transform: rotate(3deg);
-      -ms-transform: rotate(3deg); }
-    #content .note:nth-child(3n) {
-      transform: rotate(-2deg);
-      -webkit-transform: rotate(-2deg);
-      -moz-transform: rotate(-2deg);
-      -ms-transform: rotate(-2deg); }
-    #content .note:nth-child(5n) {
       transform: rotate(4deg);
       -webkit-transform: rotate(4deg);
       -moz-transform: rotate(4deg);
       -ms-transform: rotate(4deg); }
+    #content .note:nth-child(3n) {
+      transform: rotate(-3deg);
+      -webkit-transform: rotate(-3deg);
+      -moz-transform: rotate(-3deg);
+      -ms-transform: rotate(-3deg); }
+    #content .note:nth-child(5n) {
+      transform: rotate(5deg);
+      -webkit-transform: rotate(5deg);
+      -moz-transform: rotate(5deg);
+      -ms-transform: rotate(5deg); }
     #content .note .note-head {
       height: 20px;
       background-color: #ea9b35;
@@ -98,7 +101,10 @@ body {
         position: absolute;
         left: 50%;
         top: -10px;
-        margin-left: -22px;
+        transform: translate(-50%);
+        -ms-transform: translate(-50%);
+        -webkit-transform: translate(-50%);
+        -moz-transform: translate(-50%);
         content: ' ';
         display: block;
         width: 64px;
@@ -129,6 +135,20 @@ body {
       cursor: pointer;
       opacity: 0.5;
       transition: opacity .3s; }
+    #content .note .note-info {
+      line-height: 30px; }
+      #content .note .note-info .note-time {
+        text-align: right;
+        padding-right: 10px;
+        color: #fff;
+        font-size: 13px; }
+      #content .note .note-info .note-name {
+        margin-top: -1px;
+        text-align: right;
+        padding-right: 10px;
+        color: #fff;
+        margin-bottom: -9px;
+        font-size: 15px; }
   #content .draggable {
     opacity: .7; }
 /* --------markdown---------- */

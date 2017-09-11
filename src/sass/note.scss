@@ -6,26 +6,26 @@
     .note {
         position: absolute;
         color: #333;
-        width: 250px;
+        width: 230px;
         margin: 20px 10px;
         transition: all 0.5s;
         &:nth-child(even) {
-            transform: rotate(3deg);
-            -webkit-transform: rotate(3deg);
-            -moz-transform: rotate(3deg);
-            -ms-transform: rotate(3deg);
-        }
-        &:nth-child(3n) {
-            transform: rotate(-2deg);
-            -webkit-transform: rotate(-2deg);
-            -moz-transform: rotate(-2deg);
-            -ms-transform: rotate(-2deg);
-        }
-        &:nth-child(5n) {
             transform: rotate(4deg);
             -webkit-transform: rotate(4deg);
             -moz-transform: rotate(4deg);
             -ms-transform: rotate(4deg);
+        }
+        &:nth-child(3n) {
+            transform: rotate(-3deg);
+            -webkit-transform: rotate(-3deg);
+            -moz-transform: rotate(-3deg);
+            -ms-transform: rotate(-3deg);
+        }
+        &:nth-child(5n) {
+            transform: rotate(5deg);
+            -webkit-transform: rotate(5deg);
+            -moz-transform: rotate(5deg);
+            -ms-transform: rotate(5deg);
         }
         .note-head {
             height: 20px;
@@ -38,7 +38,10 @@
                 position: absolute;
                 left: 50%;
                 top: -10px;
-                margin-left: -22px;
+                transform: translate(-50%);
+                -ms-transform:translate(-50%);
+                -webkit-transform:translate(-50%);
+                -moz-transform: translate(-50%);
                 content: ' ';
                 display: block;
                 width: 64px;
@@ -74,8 +77,28 @@
             opacity: 0.5;
             transition: opacity .3s;
         }
+
+        .note-info{
+            line-height: 30px;
+            .note-time{
+                text-align: right;
+                padding-right: 10px;
+                color: #fff;
+                font-size: 13px;
+            }
+            .note-name{
+                margin-top: -1px;
+                text-align: right;
+                padding-right: 10px;
+                color: #fff;
+                margin-bottom: -9px;
+                font-size: 15px;
+            }
+        }
+        
     }
     .draggable {
         opacity: .7;
     }
 }
+

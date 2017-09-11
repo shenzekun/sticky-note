@@ -24,20 +24,22 @@ Note.prototype = {
         id: '', //Note的 id
         $ct: $('#content').length > 0 ? $('#content') : $('body'), //默认存放 Note 的容器
         context: '请输入内容', //Note 的内容
-        createTime: new Date().toISOString().match(/^\d{4}-\d{1,2}-\d{1,2}/)
+        createTime: new Date().toISOString().match(/^\d{4}-\d{1,2}-\d{1,2}/),
+        username: 'admin'
     },
     initOpts: function (opts) {
         this.opts = $.extend({}, this.defaultOpts, opts || {});
         if (this.opts.id) {
             this.id = this.opts.id;
         }
-        this.createTime = this.opts.createTime ? this.opts.createTime : new Date().toISOString().match(/^\d{4}-\d{1,2}-\d{1,2}/)
+        this.createTime = this.opts.createTime ? this.opts.createTime : new Date().toISOString().match(/^\d{4}-\d{1,2}-\d{1,2}/);
+        this.username = this.opts.username ? this.opts.username : 'admin'
     },
     createNode: function () {
         var tpl = '<div class="note">' +
             '<div class="note-head"><span class="delete">&times;</span></div>' +
             '<div class="note-ct" contenteditable="true"></div>' +
-            '<div class="note-info"><div class="note-time">'+this.createTime+'</div>'+
+            '<div class="note-info"><div class="note-name">' + this.username + '</div><div class="note-time">' + this.createTime + '</div>' +
             '</div>';
         this.$note = $(tpl);
         this.$note.find('.note-ct').html(this.opts.context);
@@ -50,6 +52,7 @@ Note.prototype = {
         var color = this.colors[Math.floor(Math.random() * 6)];
         this.$note.find(".note-head").css('background-color', color[0]);
         this.$note.find('.note-ct').css('background-color', color[1]);
+        this.$note.find('.note-info').css('background-color', color[1]);
     },
     setLayout: function () {
         var self = this;

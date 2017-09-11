@@ -10,9 +10,9 @@
 </head>
 
 <body>
-  <div id="header">
-      <a class="add-note" title="添加笔记" href="#"><i class="fa fa-plus" aria-hidden="true"></i>Add Note</a>
-   
+  <div id="header" onselectstart="return false" ondragstart="return false">
+    <a class="add-note" title="添加笔记" href="#"><i class="fa fa-plus" aria-hidden="true"></i>Add Note</a>
+
     <ul class="user-area">
       <% if (isLogin){ %>
         <li><img src="<%= user.avatar %>" alt=""></li>
@@ -26,15 +26,14 @@
     </ul>
 
   </div>
- 
+
   <div id="content"></div>
-  <div class="stars"></div>
   <script src="/js/index.js"></script>
   <script src="/js/MarkdownIME.min.js"></script>
   <script>
-    document.querySelector(".add-note").addEventListener("click", function () {
+    document.querySelector("body").addEventListener("click", function () {
+      console.log(document.querySelectorAll(".note-ct"))
       var note_ct = document.querySelectorAll(".note-ct");
-      console.log(note_ct)
       MarkdownIME.Enhance(note_ct);
     })
   </script>
