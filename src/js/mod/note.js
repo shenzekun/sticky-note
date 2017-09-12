@@ -24,7 +24,7 @@ Note.prototype = {
         id: '', //Note的 id
         $ct: $('#content').length > 0 ? $('#content') : $('body'), //默认存放 Note 的容器
         context: '请输入内容', //Note 的内容
-        createTime: new Date().toISOString().match(/^\d{4}-\d{1,2}-\d{1,2}/),
+        createTime: new Date().toLocaleDateString().replace(/\//g,'-').match(/^\d{4}-\d{1,2}-\d{1,2}/),
         username: 'admin'
     },
     initOpts: function (opts) {
@@ -32,7 +32,7 @@ Note.prototype = {
         if (this.opts.id) {
             this.id = this.opts.id;
         }
-        this.createTime = this.opts.createTime ? this.opts.createTime : new Date().toISOString().match(/^\d{4}-\d{1,2}-\d{1,2}/);
+        this.createTime = this.opts.createTime ? this.opts.createTime : new Date().toLocaleDateString().replace(/\//g,'-').match(/^\d{4}-\d{1,2}-\d{1,2}/);
         this.username = this.opts.username ? this.opts.username : 'admin'
     },
     createNode: function () {
@@ -94,8 +94,6 @@ Note.prototype = {
         $noteHead.on('mousedown', function (e) {
             var evtX = e.pageX - $note.offset().left, //evtX 计算事件的触发点在 dialog内部到 dialog 的左边缘的距离
                 evtY = e.pageY - $note.offset().top;
-            console.log($note.offset().top)
-            console.log(evtX, evtY, e.pageY, e.pageX)
             $note.addClass('draggable').data('evtPos', {
                 x: evtX,
                 y: evtY

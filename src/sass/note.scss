@@ -10,19 +10,19 @@
         margin: 20px 10px;
         transition: all 0.5s;
         &:nth-child(even) {
-            transform: rotate(4deg);
+            transform: rotate(3deg);
             -webkit-transform: rotate(4deg);
             -moz-transform: rotate(4deg);
             -ms-transform: rotate(4deg);
         }
         &:nth-child(3n) {
-            transform: rotate(-3deg);
+            transform: rotate(-2deg);
             -webkit-transform: rotate(-3deg);
             -moz-transform: rotate(-3deg);
             -ms-transform: rotate(-3deg);
         }
         &:nth-child(5n) {
-            transform: rotate(5deg);
+            transform: rotate(4deg);
             -webkit-transform: rotate(5deg);
             -moz-transform: rotate(5deg);
             -ms-transform: rotate(5deg);
@@ -97,5 +97,6 @@
     }
     .draggable {
         opacity: .7;
+        z-index: -10;
     }
 }
