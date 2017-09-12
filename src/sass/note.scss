@@ -10,10 +10,10 @@
         margin: 20px 11px;
         transition: all .2s;
         &:nth-child(even) {
-            transform: rotate(2deg);
-            -webkit-transform: rotate(2deg);
-            -moz-transform: rotate(2deg);
-            -ms-transform: rotate(2deg);
+            transform: rotate(1deg);
+            -webkit-transform: rotate(1deg);
+            -moz-transform: rotate(1deg);
+            -ms-transform: rotate(1deg);
         }
         &:nth-child(3n) {
             transform: rotate(-1deg);
@@ -22,10 +22,10 @@
             -ms-transform: rotate(-1deg);
         }
         &:nth-child(5n) {
-            transform: rotate(3deg);
-            -webkit-transform: rotate(3deg);
-            -moz-transform: rotate(3deg);
-            -ms-transform: rotate(3deg);
+            transform: rotate(1deg);
+            -webkit-transform: rotate(1deg);
+            -moz-transform: rotate(1deg);
+            -ms-transform: rotate(1deg);
         }
         .note-head {
             height: 20px;
