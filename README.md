@@ -33,7 +33,7 @@ node bin/www
 打开浏览器：
 
 ```
-http://localhost:3333/
+http://localhost:6666/
 ```
 
 ### 实现功能
