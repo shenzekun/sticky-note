@@ -51,7 +51,8 @@ body {
         text-decoration: none;
         color: #fff; }
       #header .user-area li .login {
-        color: #fff; }
+        color: #fff;
+        text-decoration: none; }
 /* --------toast---------- */
 .toast {
   position: fixed;
