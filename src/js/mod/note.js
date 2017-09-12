@@ -89,7 +89,6 @@ Note.prototype = {
             }
         });
 
-        //-----------------bug---------------------------------------
         //设置笔记的移动
         $noteHead.on('mousedown', function (e) {
             var evtX = e.pageX - $note.offset().left, //evtX 计算事件的触发点在 dialog内部到 dialog 的左边缘的距离
@@ -111,7 +110,6 @@ Note.prototype = {
     },
 
 
-    //--------------------------------------------------------
 
 
 

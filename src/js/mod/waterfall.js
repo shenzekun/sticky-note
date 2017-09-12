@@ -31,10 +31,10 @@ var WaterFall = (function () {
             }
             
             //改变窗口高度
-            if (windowHeight < colSumHeight[index]) {
-                $("body").height(colSumHeight[index]);
+            if (windowHeight < minSumHeight) {
+                $("body").height(minSumHeight);
             } else {
-                $("body").height(windowHeight - 75);
+                $("body").height(windowHeight - 72);
             }
             //对当前元素进行定位
             $current.animate({

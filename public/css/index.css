@@ -77,7 +77,7 @@ body {
     position: absolute;
     color: #333;
     width: 230px;
-    margin: 20px 13px;
+    margin: 20px 11px;
     transition: all .2s; }
     #content .note:nth-child(even) {
       transform: rotate(2deg);

@@ -271,10 +271,10 @@ var WaterFall = (function () {
             }
             
             //改变窗口高度
-            if (windowHeight < colSumHeight[index]) {
-                $("body").height(colSumHeight[index]);
+            if (windowHeight < minSumHeight) {
+                $("body").height(minSumHeight);
             } else {
-                $("body").height(windowHeight - 75);
+                $("body").height(windowHeight - 72);
             }
             //对当前元素进行定位
             $current.animate({
@@ -448,7 +448,6 @@ Note.prototype = {
             }
         });
 
-        //-----------------bug---------------------------------------
         //设置笔记的移动
         $noteHead.on('mousedown', function (e) {
             var evtX = e.pageX - $note.offset().left, //evtX 计算事件的触发点在 dialog内部到 dialog 的左边缘的距离
@@ -470,7 +469,6 @@ Note.prototype = {
     },
 
 
-    //--------------------------------------------------------
 
 
 
