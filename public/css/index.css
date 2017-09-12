@@ -29,7 +29,7 @@ body {
       padding-bottom: 2px; }
   #header .user-area {
     float: right;
-    margin-right: 140px; }
+    margin-right: 120px; }
     #header .user-area li {
       float: left;
       list-style: none;
@@ -48,7 +48,10 @@ body {
         color: #fff;
         display: block; }
       #header .user-area li .logout {
-        text-decoration: none; }
+        text-decoration: none;
+        color: #fff; }
+      #header .user-area li .login {
+        color: #fff; }
 /* --------toast---------- */
 .toast {
   position: fixed;
@@ -80,20 +83,20 @@ body {
     margin: 20px 11px;
     transition: all .2s; }
     #content .note:nth-child(even) {
-      transform: rotate(2deg);
-      -webkit-transform: rotate(2deg);
-      -moz-transform: rotate(2deg);
-      -ms-transform: rotate(2deg); }
+      transform: rotate(1deg);
+      -webkit-transform: rotate(1deg);
+      -moz-transform: rotate(1deg);
+      -ms-transform: rotate(1deg); }
     #content .note:nth-child(3n) {
       transform: rotate(-1deg);
       -webkit-transform: rotate(-1deg);
       -moz-transform: rotate(-1deg);
       -ms-transform: rotate(-1deg); }
     #content .note:nth-child(5n) {
-      transform: rotate(3deg);
-      -webkit-transform: rotate(3deg);
-      -moz-transform: rotate(3deg);
-      -ms-transform: rotate(3deg); }
+      transform: rotate(1deg);
+      -webkit-transform: rotate(1deg);
+      -moz-transform: rotate(1deg);
+      -ms-transform: rotate(1deg); }
     #content .note .note-head {
       height: 20px;
       background-color: #ea9b35;

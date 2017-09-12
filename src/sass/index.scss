@@ -34,7 +34,7 @@ body {
     }
     .user-area {
         float: right;
-        margin-right: 140px;
+        margin-right: 120px;
         li {
             float: left;
             list-style: none;
@@ -58,6 +58,10 @@ body {
             }
             .logout {
                 text-decoration: none;
+                color: #fff;
+            }
+            .login{
+                color: #fff;
             }
         }
     }
