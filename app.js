@@ -13,6 +13,7 @@ var api = require('./routes/api');
 var auth=require('./routes/auth');
 
 var app = express();
+app.listen(3333);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

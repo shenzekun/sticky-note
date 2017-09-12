@@ -78,7 +78,7 @@ body {
     color: #333;
     width: 230px;
     margin: 20px 10px;
-    transition: all 0.5s; }
+    transition: all .1s; }
     #content .note:nth-child(even) {
       transform: rotate(3deg);
       -webkit-transform: rotate(4deg);
@@ -154,7 +154,7 @@ body {
         font-size: 15px; }
   #content .draggable {
     opacity: .7;
-    z-index: -10; }
+    z-index: 10; }
 /* --------markdown---------- */
 blockquote {
   border-left: 5px solid #ccc;

@@ -7,6 +7,7 @@ var WaterFall = (function () {
         $ct = $c;
         $items = $ct.children();
         var nodeWidth = $items.outerWidth(true),
+            windowHeight = $(window).height(),
             colNum = parseInt($(window).width() / nodeWidth), //获取列数
             colSumHeight = []; //获取每列的高度
 
@@ -28,13 +29,20 @@ var WaterFall = (function () {
                     minSumHeight = colSumHeight[i];
                 }
             }
-
+            
+            //改变窗口高度
+            if (windowHeight < colSumHeight[index]) {
+                $("body").height(colSumHeight[index]);
+            } else {
+                $("body").height(windowHeight - 75);
+            }
             //对当前元素进行定位
             $current.animate({
                 left: nodeWidth * index,
                 top: minSumHeight
-            },5);
+            }, 5);
             colSumHeight[index] += $current.outerHeight(true);
+
         });
     }
 

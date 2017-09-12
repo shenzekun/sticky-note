@@ -247,6 +247,7 @@ var WaterFall = (function () {
         $ct = $c;
         $items = $ct.children();
         var nodeWidth = $items.outerWidth(true),
+            windowHeight = $(window).height(),
             colNum = parseInt($(window).width() / nodeWidth), //获取列数
             colSumHeight = []; //获取每列的高度
 
@@ -268,13 +269,20 @@ var WaterFall = (function () {
                     minSumHeight = colSumHeight[i];
                 }
             }
-
+            
+            //改变窗口高度
+            if (windowHeight < colSumHeight[index]) {
+                $("body").height(colSumHeight[index]);
+            } else {
+                $("body").height(windowHeight - 75);
+            }
             //对当前元素进行定位
             $current.animate({
                 left: nodeWidth * index,
                 top: minSumHeight
-            },5);
+            }, 5);
             colSumHeight[index] += $current.outerHeight(true);
+
         });
     }
 
@@ -375,7 +383,7 @@ Note.prototype = {
         id: '', //Note的 id
         $ct: $('#content').length > 0 ? $('#content') : $('body'), //默认存放 Note 的容器
         context: '请输入内容', //Note 的内容
-        createTime: new Date().toLocaleDateString().replace(/\//g,'-').match(/^\d{4}-\d{1,2}-\d{1,2}/),
+        createTime: new Date().toLocaleDateString().replace(/\//g, '-').match(/^\d{4}-\d{1,2}-\d{1,2}/),
         username: 'admin'
     },
     initOpts: function (opts) {
@@ -383,7 +391,7 @@ Note.prototype = {
         if (this.opts.id) {
             this.id = this.opts.id;
         }
-        this.createTime = this.opts.createTime ? this.opts.createTime : new Date().toLocaleDateString().replace(/\//g,'-').match(/^\d{4}-\d{1,2}-\d{1,2}/);
+        this.createTime = this.opts.createTime ? this.opts.createTime : new Date().toLocaleDateString().replace(/\//g, '-').match(/^\d{4}-\d{1,2}-\d{1,2}/);
         this.username = this.opts.username ? this.opts.username : 'admin'
     },
     createNode: function () {
@@ -450,13 +458,14 @@ Note.prototype = {
                 y: evtY
             }); //把事件到 dialog 边缘的距离保存下来
         }).on('mouseup', function () {
-            $note.removeClass('draggable').removeData('evtPos');
+            $note.removeClass('draggable').removeData('pos');
         });
+
         $('body').on('mousemove', function (e) {
             $('.draggable').length && $('.draggable').offset({
-                top: e.pageY - $('.draggable').data('evtPos').y,
+                top: e.pageY - $('.draggable').data('evtPos').y, // 当用户鼠标移动时，根据鼠标的位置和前面保存的距离，计算 dialog 的绝对位置
                 left: e.pageX - $('.draggable').data('evtPos').x
-            })
+            });
         });
     },
 
@@ -472,7 +481,7 @@ Note.prototype = {
             note: msg
         }).done(function (res) {
             if (res.status === 1) {
-                _this.id=res.id;
+                _this.id = res.id;
                 Toast(1, '添加成功！');
             } else {
                 _this.$note.remove();
