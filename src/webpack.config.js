@@ -36,6 +36,11 @@ module.exports = {
                     autoprefixer(),
                 ]
             }
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
         })
     ]
 }
