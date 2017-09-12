@@ -1,6 +1,9 @@
 # sticky-note
 A sticky note using node and express
 
+### 预览
+
+[便利贴](http://note.shenzekun.cn/)
 
 ### 安装方法
 
