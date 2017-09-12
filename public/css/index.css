@@ -148,14 +148,14 @@ body {
         text-align: right;
         padding-right: 10px;
         color: #fff;
-        font-size: 13px; }
+        font-size: 12px; }
       #content .note .note-info .note-name {
         margin-top: -1px;
         text-align: right;
         padding-right: 10px;
         color: #fff;
         margin-bottom: -9px;
-        font-size: 15px; }
+        font-size: 14px; }
   #content .draggable {
     opacity: .7;
     z-index: 10; }
