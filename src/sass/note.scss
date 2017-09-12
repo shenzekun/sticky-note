@@ -7,25 +7,25 @@
         position: absolute;
         color: #333;
         width: 230px;
-        margin: 20px 10px;
-        transition: all .1s;
+        margin: 20px 13px;
+        transition: all .2s;
         &:nth-child(even) {
-            transform: rotate(3deg);
-            -webkit-transform: rotate(4deg);
-            -moz-transform: rotate(4deg);
-            -ms-transform: rotate(4deg);
+            transform: rotate(2deg);
+            -webkit-transform: rotate(2deg);
+            -moz-transform: rotate(2deg);
+            -ms-transform: rotate(2deg);
         }
         &:nth-child(3n) {
-            transform: rotate(-2deg);
-            -webkit-transform: rotate(-3deg);
-            -moz-transform: rotate(-3deg);
-            -ms-transform: rotate(-3deg);
+            transform: rotate(-1deg);
+            -webkit-transform: rotate(-1deg);
+            -moz-transform: rotate(-1deg);
+            -ms-transform: rotate(-1deg);
         }
         &:nth-child(5n) {
-            transform: rotate(4deg);
-            -webkit-transform: rotate(5deg);
-            -moz-transform: rotate(5deg);
-            -ms-transform: rotate(5deg);
+            transform: rotate(3deg);
+            -webkit-transform: rotate(3deg);
+            -moz-transform: rotate(3deg);
+            -ms-transform: rotate(3deg);
         }
         .note-head {
             height: 20px;
