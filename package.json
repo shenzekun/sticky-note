@@ -28,7 +28,7 @@
     "sass-loader": "^6.0.6",
     "sequelize": "^4.8.2",
     "serve-favicon": "~2.4.2",
-    "sqlite3": "^3.1.10",
+    "sqlite3": "^3.1.13",
     "style-loader": "^0.18.2"
   },
   "devDependencies": {
