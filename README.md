@@ -1,8 +1,6 @@
 # sticky-note
 A sticky note using node and express
 
-[![](https://badge.juejin.im/entry/59ceef46f265da067374f8fb/likes.svg?style=plastic)](https://juejin.im/entry/59ceef46f265da067374f8fb/detail)
-
 ### 预览
 
 [便利贴](http://note.shenzekun.cn/)
