@@ -16,19 +16,19 @@ function toast(status, msg, time) {
 toast.prototype = {
     createToast: function () {
         if (this.status === 1) {
-            var html = '<div class="toast"><img src="../../imgs/1.png" class="toast_icon"></img><span class="toast_word">' + this.msg + '</span></div>';
+            let html = `<div class="toast"><img src="../../imgs/1.png" class="toast_icon"></img><span class="toast_word">${this.msg}</span></div>`;
             this.$toast = $(html);
             $('body').append(this.$toast);
         } else {
-            var html = '<div class="toast"><img src="../../imgs/0.png" class="toast_icon"></img><span class="toast_word">' + this.msg + '</span></div>';
+            let html = `<div class="toast"><img src="../../imgs/0.png" class="toast_icon"></img><span class="toast_word">${this.msg}</span></div>`;
             this.$toast = $(html);
             $('body').append(this.$toast);
         }
     },
     showToast: function () {
-        var _this = this;
+        let _this = this;
         this.$toast.fadeIn(300, function () {
-            setTimeout(function () {
+            setTimeout(() => {
                 _this.$toast.fadeOut(300, function () {
                     _this.$toast.remove();
                 });

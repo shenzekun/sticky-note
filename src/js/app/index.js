@@ -1,10 +1,8 @@
 require('sass/index.scss');
-var Toast = require('mod/toast.js').Toast;
-var WaterFall = require('mod/waterfall.js');
-var NoteManager = require('mod/note-manager');
-var Event = require('mod/event.js');
-
-
+let Toast = require('mod/toast.js').Toast;
+let WaterFall = require('mod/waterfall.js');
+let NoteManager = require('mod/note-manager');
+let Event = require('mod/event');
 NoteManager.load();
 $('.add-note').on('click', function () {
     NoteManager.add();

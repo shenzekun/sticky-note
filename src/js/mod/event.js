@@ -1,6 +1,6 @@
 /* 发布订阅模式 */
-var Event = (function () {
-    var events = {};
+let Event = (function () {
+    let events = {};
 
     function on(evt, handler) {
         events[evt] = events[evt] || [];
@@ -13,7 +13,7 @@ var Event = (function () {
         if (!events[evt]) {
             return;
         }
-        for (var i = 0; i < events[evt].length; i++) {
+        for (let i = 0; i < events[evt].length; i++) {
             events[evt][i].handler(args);
         }
     }

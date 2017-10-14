@@ -1,8 +1,7 @@
 require('sass/note.scss')
 require('sass/markdown.scss')
-var Toast = require('./toast.js').Toast;
-var Event = require('./event.js');
-
+let Toast = require('./toast.js').Toast;
+let Event = require('./event.js');
 
 function Note(opts) {
     this.initOpts(opts);
@@ -35,48 +34,43 @@ Note.prototype = {
         this.username = this.opts.username ? this.opts.username : 'admin'
     },
     createNode: function () {
-        var tpl = '<div class="note">' +
-            '<div class="note-head"><span class="delete">&times;</span></div>' +
-            '<div class="note-ct" contenteditable="true"></div>' +
-            '<div class="note-info"><div class="note-name">' + this.username + '</div><div class="note-time">' + this.createTime + '</div>' +
-            '</div>';
+        let tpl = `<div class="note">
+            <div class="note-head"><span class="delete">&times;</span></div>
+            <div class="note-ct" contenteditable="true"></div>
+            <div class="note-info"><div class="note-name">${this.username}</div><div class="note-time">${this.createTime}</div>
+            </div>`;
         this.$note = $(tpl);
         this.$note.find('.note-ct').html(this.opts.context);
         this.opts.$ct.append(this.$note);
-        //if (!this.id) this.$note.css('bottom', '10px'); //新增放到右边
         Event.fire('waterfall');
     },
 
     setColor: function () {
-        var color = this.colors[Math.floor(Math.random() * 5)];
+        let color = this.colors[Math.floor(Math.random() * 5)];
         this.$note.find(".note-head").css('background-color', color[0]);
         this.$note.find('.note-ct').css('background-color', color[1]);
         this.$note.find('.note-info').css('background-color', color[1]);
     },
     setLayout: function () {
-        var self = this;
+        let self = this;
         if (self.clock) {
             clearTimeout(self.clock);
         }
-        self.clock = setTimeout(function () {
-            Event.fire('waterfall');
-        }, 100);
+        self.clock = setTimeout(()=> Event.fire('waterfall'), 100);
     },
     bind: function () {
-        var _this = this, //记录下坑，之前末尾是分号不是逗号后面都变成了全局变量结果造成了最后一个才能修改😂
+        let _this = this, //记录下坑，之前末尾是分号不是逗号后面都变成了全局变量结果造成了最后一个才能修改😂
             $note = this.$note,
             $noteHead = $note.find('.note-head'),
             $noteCt = $note.find('.note-ct'),
             $close = $note.find('.delete');
 
-        $close.on('click', function () {
-            _this.delete();
-        });
+        $close.on('click', () => _this.delete());
 
-        $noteCt.on('focus', function () {
+        $noteCt.on('focus', () => {
             if ($noteCt.html() === '请输入内容') $noteCt.html('');
             $noteCt.data('before', $noteCt.html());
-        }).on('blur paste', function () {
+        }).on('blur paste', () => {
             if ($noteCt.data('before') != $noteCt.html()) {
                 $noteCt.data('before', $noteCt.html());
                 _this.setLayout();
@@ -90,17 +84,15 @@ Note.prototype = {
 
         //设置笔记的移动
         $noteHead.on('mousedown', function (e) {
-            var evtX = e.pageX - $note.offset().left, //evtX 计算事件的触发点在 dialog内部到 dialog 的左边缘的距离
+            let evtX = e.pageX - $note.offset().left, //evtX 计算事件的触发点在 dialog内部到 dialog 的左边缘的距离
                 evtY = e.pageY - $note.offset().top;
             $note.addClass('draggable').data('evtPos', {
                 x: evtX,
                 y: evtY
             }); //把事件到 dialog 边缘的距离保存下来
-        }).on('mouseup', function () {
-            $note.removeClass('draggable').removeData('pos');
-        });
+        }).on('mouseup', ()=> $note.removeClass('draggable').removeData('pos'));
 
-        $('body').on('mousemove', function (e) {
+        $('body').on('mousemove', (e) => {
             $('.draggable').length && $('.draggable').offset({
                 top: e.pageY - $('.draggable').data('evtPos').y, // 当用户鼠标移动时，根据鼠标的位置和前面保存的距离，计算 dialog 的绝对位置
                 left: e.pageX - $('.draggable').data('evtPos').x
@@ -114,10 +106,10 @@ Note.prototype = {
 
     /* 添加笔记到数据库 */
     add: function (msg) {
-        var _this = this;
+        let _this = this;
         $.post('/api/notes/add', {
             note: msg
-        }).done(function (res) {
+        }).done((res) => {
             if (res.status === 1) {
                 _this.id = res.id;
                 Toast(1, '添加成功！');
@@ -130,11 +122,11 @@ Note.prototype = {
     },
     /* 编辑笔记数据库 */
     edit: function (msg) {
-        var _this = this;
+        let _this = this;
         $.post('/api/notes/edit', {
             id: this.id,
             note: msg
-        }).done(function (res) {
+        }).done((res) => {
             if (res.status === 1) {
                 Toast(1, '更新成功！');
             } else {
@@ -144,11 +136,11 @@ Note.prototype = {
     },
     /* 删除笔记 */
     delete: function () {
-        var _this = this;
+        let _this = this;
         if (confirm("确认要删除吗？")) {
             $.post('/api/notes/delete', {
                 id: this.id
-            }).done(function (res) {
+            }).done((res) => {
                 if (res.status === 1) {
                     Toast(1, '删除成功！');
                     _this.$note.remove();

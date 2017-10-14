@@ -1,13 +1,13 @@
-var Toast = require('./toast.js').Toast;
-var Note = require('./note.js').Note;
-var Event = require('mod/event.js');
+let Toast = require('./toast.js').Toast;
+let Note = require('./note.js').Note;
+let Event = require('mod/event.js');
 
-var NoteManager = (function () {
+let NoteManager = (function () {
     //页面加载
     function load() {
-        $.get('api/notes').done(function (res) {
+        $.get('api/notes').done((res) => {
             if (res.status === 1) {
-                $.each(res.data, function (index, msg) {
+                $.each(res.data, (index,msg)=>{
                     new Note({
                         id: msg.id,
                         context: msg.text,
@@ -15,20 +15,17 @@ var NoteManager = (function () {
                         username: msg.username
                     });
                 });
-
                 Event.fire('waterfall');
-
             } else {
                 Toast(0, res.errorMsg);
             }
-        }).fail(function () {
+        }).fail(()=>{
             Toast(0, "网络异常");
         });
     }
-
     /* 添加笔记 */
     function add() {
-        $.get('/login').then(function (res) {
+        $.get('/login').then((res)=> {
             if (res.status === 1) {
                 new Note({
                     username: res.username

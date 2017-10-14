@@ -1,35 +1,32 @@
 /* 瀑布流 */
 
-var WaterFall = (function () {
-    var $ct, $items;
+let WaterFall = (function () {
+    let $ct, $items;
 
     function render($c) {
         $ct = $c;
         $items = $ct.children();
-        var nodeWidth = $items.outerWidth(true),
+        let nodeWidth = $items.outerWidth(true),
             windowHeight = $(window).height(),
             colNum = parseInt($(window).width() / nodeWidth), //获取列数
             colSumHeight = []; //获取每列的高度
-
-
         //对每列的高度进行初始化
-        for (var i = 0; i < colNum; i++) {
+        for (let i = 0; i < colNum; i++) {
             colSumHeight[i] = 0;
         }
 
         $items.each(function () {
-            var $current = $(this);
-            var index = 0,
+            let $current = $(this);
+            let index = 0,
                 minSumHeight = colSumHeight[0];
 
             //获取最小的的列数的高度和索引
-            for (var i = 0; i < colSumHeight.length; i++) {
+            for (let i = 0; i < colSumHeight.length; i++) {
                 if (minSumHeight > colSumHeight[i]) {
                     index = i;
                     minSumHeight = colSumHeight[i];
                 }
             }
-            
             //改变窗口高度
             if (windowHeight < minSumHeight) {
                 $("body").height(minSumHeight);
@@ -47,9 +44,7 @@ var WaterFall = (function () {
     }
 
     //当窗口发生变化时，重新渲染
-    $(window).on('resize', function () {
-        render($ct);
-    });
+    $(window).on('resize', () => render($ct));
     return {
         init: render
     }
