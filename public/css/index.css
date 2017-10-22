@@ -10,7 +10,9 @@ body {
   user-select: none; }
 
 body {
-  background-color: #fffec7; }
+  background: url("https://i.loli.net/2017/10/22/59ec5b0765979.jpg") 0 0 no-repeat;
+  background-size: cover;
+  background-attachment: fixed; }
 
 #header {
   width: 100%;
