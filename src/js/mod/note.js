@@ -16,7 +16,9 @@ Note.prototype = {
         ['#dd598b', '#e672a2'],
         ['#c24226', '#d15a39'],
         ['#c1c341', '#d0d25c'],
-        ['#3f78c3', '#5591d2']
+        ['#3f78c3', '#5591d2'],
+        ['#766eff','#6e8aff'],
+        ['#72a857','#72a880']
     ],
     defaultOpts: {
         id: '', //Note的 id
@@ -46,7 +48,7 @@ Note.prototype = {
     },
 
     setColor: function () {
-        let color = this.colors[Math.floor(Math.random() * 5)];
+        let color = this.colors[Math.floor(Math.random() * 7)];
         this.$note.find(".note-head").css('background-color', color[0]);
         this.$note.find('.note-ct').css('background-color', color[1]);
         this.$note.find('.note-info').css('background-color', color[1]);
