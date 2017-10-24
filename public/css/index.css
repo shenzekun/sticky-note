@@ -87,8 +87,7 @@ body {
     position: absolute;
     color: #333;
     width: 230px;
-    margin: 20px 11px;
-    transition: all .1s; }
+    margin: 20px 11px; }
     #content .note:nth-child(even) {
       transform: rotate(1deg);
       -webkit-transform: rotate(1deg);
